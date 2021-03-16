@@ -1,8 +1,10 @@
 package com.elcompanies.eventhubkafkaproducer.producer;
 
 import com.elcompanies.eventhubkafkaproducer.message.ProducerMessage;
+import com.google.common.primitives.Ints;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,9 @@ public class KafkaMessageProducer {
         log.info("Published message to kafka queue: {}", producerMessage.getMessage());
         final String topic = kafkaTemplate.getDefaultTopic();
         final String key = "producer key";
-//        final int partition = 0;
-//        kafkaTemplate.send(topic, producerMessage.getPartition(), key, producerMessage);
-        kafkaTemplate.send(topic, key, producerMessage);
+        final int partition = 0;
+        ProducerRecord<String, ProducerMessage> record = new ProducerRecord<>(topic, key, producerMessage);
+        record.headers().add("filter", Ints.toByteArray(producerMessage.getProcessAtMinutes()));
+        kafkaTemplate.send(record);
     }
 }
