@@ -1,6 +1,6 @@
 package com.elcompanies.eventhubkafkaproducer.controller;
 
-import com.elcompanies.eventhubkafkaproducer.message.ProducerMessage;
+import com.elcompanies.eventhubkafkaproducer.message.AbstractProducerMessage;
 import com.elcompanies.eventhubkafkaproducer.producer.KafkaMessageProducer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class SendMessageController {
     private KafkaMessageProducer producer;
 
     @PostMapping(value = "/send")
-    public void sendMessage(@RequestBody ProducerMessage message) {
+    public void sendMessage(@RequestBody AbstractProducerMessage message) {
         log.info("Received request /message/send with body {} ", message);
         producer.send(message);
     }

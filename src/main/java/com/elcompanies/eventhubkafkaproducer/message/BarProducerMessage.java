@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProducerMessage {
-    private Integer processAtMinutes;
-    private String message;
+public class BarProducerMessage extends AbstractProducerMessage {
+    private List<String> barNames;
 }
